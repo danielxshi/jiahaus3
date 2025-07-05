@@ -1,0 +1,32 @@
+.footer {
+    // background-color: #000;
+    // color: white;
+    // padding: 40px 20px;
+    // padding: 20vh 0 0 0;
+    text-align: center;
+  }
+  
+  .bottomBar {
+    height: min-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .scrollText {
+    font-size: 24rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1;
+    transform-origin: center center;
+    transform: rotateX(90deg) translate3d(0px, 50px, -200px);
+    opacity: 0;
+    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease;
+    padding: 20vh 0 0 0;
+  }
+  
+  .visible {
+    transform: rotateX(0deg) translate3d(0px, 0px, 0px);
+    opacity: 1;
+  }
+  

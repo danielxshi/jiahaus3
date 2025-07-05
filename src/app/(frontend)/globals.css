@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html,
+body {
+  height: 100%;
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+  * {
+    p,
+    a {
+      line-height: 2rem !important;
+    }
+  }
+}
+.footer {
+  position: relative;
+  padding: 2rem;
+  background-color: #222;
+  color: #fff;
+}
+
+.bottomBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.scrollText {
+  opacity: 0;
+  transform: translateY(100%);
+  animation: none;
+}
+
+.scrollText.visible {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.masked-line {
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+  will-change: clip-path, opacity;
+}
+
+#masked-text .masked-line {
+  transition: clip-path 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.visible .masked-line {
+  clip-path: inset(0 0 0% 0);
+  opacity: 1;
+}
+
+html,
+body {
+  min-height: 100%;
+  text-transform: uppercase;
+}
+
+#root,
+.app {
+  height: 100%;
+} /* Full container style */ /* Full container style */
+.scroll-container {
+  height: 200vh; /* Ensure the page has enough space to scroll */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+}
+
+a {
+  text-decoration: none !important  ;
+}
+
+/* Masked text style */
+.masked-text {
+  overflow: hidden;
+  position: relative;
+  opacity: 0; /* Start hidden */
+  transition: opacity 2s ease;
+}
+
+.masked-text.visible {
+  opacity: 1; /* Make visible when class is added */
+}
+
+/* Style for each line */
+.masked-text h1,
+.masked-text p {
+  overflow: hidden;
+  margin: 0;
+  opacity: 0; /* Initially hidden */
+  transform: translateY(30px); /* Move down */
+  clip-path: inset(100% 0 0 0); /* Start with clipping the text */
+  transition: transform 1s ease, opacity 1s ease, clip-path 1s ease;
+}
+
+/* Revealing the lines one by one */
+.masked-text.visible h1:nth-child(1),
+.masked-text.visible p:nth-child(1) {
+  transform: translateY(0);
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transition-delay: 0.1s; /* Delay for line 1 */
+}
+
+.masked-text.visible h1:nth-child(2) {
+  transform: translateY(0);
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transition-delay: 0.2s; /* Delay for line 2 */
+}
+
+.masked-text.visible h1:nth-child(3) {
+  transform: translateY(0);
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transition-delay: 0.3s; /* Delay for line 3 */
+}
+
+.masked-text.visible p:nth-child(4) {
+  transform: translateY(0);
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transition-delay: 0.4s; /* Delay for line 4 */
+}
+
+// Style for the landing animation
+
+.modalContainer2 {
+  height: 350px;
+  width: 400px;
+  position: absolute;
+  background-color: white;
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalSlider {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transition: top 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.modal {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal img {
+  height: auto;
+}
+
+.cursor,
+.cursorLabel {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #455ce9;
+  color: white;
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 300;
+  pointer-events: none;
+}
+
+.cursorLabel {
+  background-color: transparent;
+}
