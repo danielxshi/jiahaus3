@@ -1,13 +1,10 @@
 // shadcn.config.ts
-import { defineConfig } from 'shadcn-ui/config'
-
-export default defineConfig({
+export default {
   $schema: 'https://ui.shadcn.dev/schema.json',
   project: {
     name: 'jiahaus3',
     type: 'app',
     baseColor: 'zinc',
-    // Optional: change to 'light' or 'dark' if needed
     cssVariables: true,
   },
   paths: {
@@ -19,4 +16,4 @@ export default defineConfig({
     css: 'app/globals.css',
     baseColor: 'zinc',
   },
-})
+}
