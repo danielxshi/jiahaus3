@@ -1,5 +1,8 @@
 import { notFound } from 'next/navigation'
 
+/* ------------------------------------------------------------------ */
+/*  Types                                                             */
+/* ------------------------------------------------------------------ */
 type Project = {
   name: string
   slug: string
@@ -23,59 +26,76 @@ type Project = {
   }[]
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
+type PayloadResponse = {
+  docs: Project[]
+}
+
+/* Next 13 / App-Router page-prop shape */
+interface PageProps {
+  params: { slug: string }
+  /* searchParams can be omitted if unused, but including it
+     silences “excess property” errors in strict mode.  */
+  searchParams?: Record<string, string | string[]>
+}
+
+/* ------------------------------------------------------------------ */
+/*  Page component                                                    */
+/* ------------------------------------------------------------------ */
+export default async function ProjectPage({ params }: PageProps) {
+  const slug = encodeURIComponent(params.slug)
+
+  /* Fetch & basic runtime validation -------------------------------- */
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_CMS_URL}/api/movies?where[slug][equals]=${params.slug}`,
+    `${process.env.NEXT_PUBLIC_CMS_URL}/api/movies?where[slug][equals]=${slug}`,
     {
+      /* Re-render every 10 s (adjust as needed) */
       next: { revalidate: 10 },
     },
   )
 
-  const data = await res.json()
+  if (!res.ok) notFound()
 
-  // ✅ Debug log to terminal
-  console.log('Payload response data:', JSON.stringify(data, null, 2))
+  const data: PayloadResponse = await res.json()
+  const project = data.docs?.[0]
 
-  const project: Project | undefined = data?.docs?.[0]
+  if (!project) notFound()
 
-  if (!project) return notFound()
-
-  const gallery = project.gallery ?? []
-
+  /* View ------------------------------------------------------------ */
   return (
     <main className="p-6 max-w-4xl mx-auto space-y-6 sm:mt-48 md:mt-64">
+      {/* Title & tagline */}
       <h1 className="text-3xl font-bold">{project.name}</h1>
-      <p className="text-gray-600">{project.tagline}</p>
+      {project.tagline && <p className="text-gray-600">{project.tagline}</p>}
 
+      {/* Overview */}
       <p className="text-lg">{project.overview}</p>
 
+      {/* Genres */}
       <div className="flex flex-wrap gap-2">
-        {project.genres.map((g, i) => (
-          <span key={i} className="bg-gray-100 px-2 py-1 rounded text-sm">
-            {g.name}
+        {project.genres.map(({ name }) => (
+          <span key={name} className="bg-gray-100 px-2 py-1 rounded text-sm">
+            {name}
           </span>
         ))}
       </div>
 
-      {gallery.length > 0 && (
+      {/* Gallery (images or video) */}
+      {project.gallery?.length ? (
         <div className="grid grid-cols-1 gap-6 mt-8">
-          {gallery.map((item, i) => {
+          {project.gallery.map((item, i) => {
             const file = item.image
-            if (!file || !file.mimeType || !file.url) return null
+            if (!file?.mimeType || !file.url) return null
 
             const isVideo = file.mimeType.startsWith('video/')
 
             return (
               <div key={i} className="flex flex-col space-y-2">
                 {isVideo ? (
-                  <video controls className="w-full rounded shadow max-h-[90vh] ">
-                    <source src={file.url} type={file.mimeType} />
-                    Your browser does not support the video tag.
-                  </video>
+                  <video controls className="w-full rounded shadow max-h-[90vh]" src={file.url} />
                 ) : (
                   <img
                     src={file.url}
-                    alt={file.alt || ''}
+                    alt={file.alt ?? ''}
                     className="w-full rounded shadow object-cover"
                   />
                 )}
@@ -84,7 +104,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
             )
           })}
         </div>
-      )}
+      ) : null}
     </main>
   )
 }
