@@ -1,17 +1,18 @@
 import type { CollectionConfig } from 'payload'
 import s3Adapter from 'payload-s3-upload'
 
-
-const adapter = s3Adapter({
+// ---- S3 adapter ----------------------------------------------------
+const s3UploadAdapter = s3Adapter({
+  bucket: process.env.S3_BUCKET ?? '',
   config: {
     credentials: {
-      accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+      accessKeyId: process.env.S3_ACCESS_KEY_ID ?? '',
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? '',
     },
-    region: process.env.S3_REGION || '',
+    region: process.env.S3_REGION ?? '',
   },
-  bucket: process.env.S3_BUCKET || '',
-})
+} as any) // 👈 cast to any to avoid TS mismatch with AWS SDK types
+// --------------------------------------------------------------------
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -19,7 +20,8 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
   upload: {
-    adapter,
+    disableLocalStorage: true,
+    adapter: s3UploadAdapter as any, // 👈 Payload expects string but accepts object at runtime
     mimeTypes: [
       'image/jpeg',
       'image/png',
@@ -28,7 +30,8 @@ export const Media: CollectionConfig = {
       'video/webm',
       'video/quicktime',
     ],
-    adminThumbnail: ({ doc }) => doc?.url, // show preview of image or video
+    // must return string | false | null
+    adminThumbnail: ({ doc }: any) => (doc?.url as string) ?? '',
   },
   fields: [
     {
