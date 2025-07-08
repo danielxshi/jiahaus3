@@ -27,6 +27,7 @@ interface Props {
   projects?: { src: string; color: string }[]
   movies: {
     id: string
+    slug: string
     name?: string
     overview?: string
     poster?: { url: string }
@@ -190,9 +191,9 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
     setHoveredIndex(index)
     setActiveIndex(index)
   }
-
   const gridProjects = movies.map((movie) => ({
     id: movie.id,
+    slug: movie.slug, // ✅ add this
     title: movie.name || 'Untitled',
     subtitle: movie.overview || 'No description available',
     image: movie.poster ? { url: movie.poster.url } : undefined,

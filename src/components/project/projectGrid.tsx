@@ -1,9 +1,12 @@
-// components/project/ProjectGrid.tsx
+'use client'
+
 import React from 'react'
+import Link from 'next/link'
 import styles from './ProjectGrid.module.scss'
 
 interface Project {
   id: string
+  slug: string
   title: string
   subtitle?: string
   description?: string
@@ -22,20 +25,24 @@ const ProjectGrid: React.FC<{ projects: Project[] }> = ({ projects }) => (
         className={`${styles.gridItem} gap-y-8`}
         style={{ gridColumn: `span ${columnSpans[index % columnSpans.length]}` }}
       >
-        <div className="flex flex-col">
-          <img
-            src={project.image?.url}
-            alt={project.subtitle || project.title}
-            className={styles.image}
-          />
-          <div className={`${styles.text} mt-4 flex justify-between`}>
-            <h3>{project.title}</h3>
-            <div className="flex flex-col">
-              <h4>{project.subtitle}</h4>
-              <p>{project.description}</p>
+        <Link href={`/projects/${project.slug}`} className="block hover:opacity-80 transition-all">
+          <div className="flex flex-col">
+            {project.image?.url && (
+              <img
+                src={project.image.url}
+                alt={project.subtitle || project.title}
+                className={styles.image}
+              />
+            )}
+            <div className={`${styles.text} mt-4 flex justify-between`}>
+              <h3>{project.title}</h3>
+              <div className="flex flex-col">
+                <h4>{project.subtitle}</h4>
+                <p>{project.description}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
     ))}
   </div>
