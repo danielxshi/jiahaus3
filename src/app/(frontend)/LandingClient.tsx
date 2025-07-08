@@ -56,22 +56,22 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
   const bgControl = useRef<HTMLDivElement>(null)
 
   const items = [
-    { id: 0, hoverText: 'Hovered 1', skill: 'Web Development' },
-    { id: 1, hoverText: 'Hovered 2', skill: 'Design' },
-    { id: 2, hoverText: 'Hovered 3', skill: 'Branding' },
+    { id: 0, hoverText: 'Media', skill: 'Event' },
+    { id: 1, hoverText: 'Media', skill: 'Automotive' },
+    { id: 2, hoverText: 'Media', skill: 'Real Estate' },
   ]
 
   const images = [
     {
-      src: 'https://www.datocms-assets.com/138794/1729718757-dothings_hero_pers.jpg',
+      src: 'https://i.imgur.com/Q7aza9I.jpeg',
       title: 'Dynamic Hero Image',
     },
     {
-      src: 'https://i.makeagif.com/media/8-06-2022/s6jXoT.gif',
+      src: 'https://i.imgur.com/LKuJ5mz.jpeg',
       title: 'Funny Animation',
     },
     {
-      src: 'https://i.redd.it/uq02spvbvi681.gif',
+      src: 'https://i.imgur.com/puPmbFu.jpeg',
       title: 'Creative Visual',
     },
   ]
@@ -202,14 +202,17 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
   return (
     <>
       <div className="landing-container relative overflow-hidden col-span-12 min-h-screen">
-        <div
+        <motion.div
           ref={bgImageRef}
           className="backdrop absolute top-0 left-0 h-full w-full z-40 bg-cover bg-center"
           style={{ backgroundImage: bgImage }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
         />
         <div ref={bgControl} className="absolute top-0 left-0 h-full w-full bg-black z-30" />
         <div className="backdrop absolute bottom-0 left-0 flex pb-4 w-screen z-50 h-fit">
-          <div className="grid grid-cols-12 px-4 w-full">
+          <div className="grid grid-cols-12 px-8 w-full">
             <div className="col-start-1 col-end-5 row-start-1 flex *:mb-0 *:mt-auto">
               {items.map((item) => (
                 <div
@@ -229,7 +232,7 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
               ))}
             </div>
             <div
-              className="col-start-4 col-end-9 row-start-1"
+              className="col-start-7 col-end-12 row-start-1"
               onMouseEnter={() => setIsContainerHovered(true)}
               onMouseLeave={() => setIsContainerHovered(false)}
             >
@@ -237,7 +240,7 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
                 {images.map((img, index) => (
                   <img
                     key={index}
-                    className="image w-32 aspect-video rounded-md cursor-pointer shadow-md"
+                    className="image w-32 h-16 rounded-md cursor-pointer shadow-md object-cover"
                     src={img.src}
                     alt={img.title}
                     onMouseEnter={() => handleMouseEnterImage(index, img.src)}
@@ -257,7 +260,7 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
             {images.map((img, i) => (
               <img
                 key={i}
-                className="image w-32 aspect-video mx-auto rounded-md"
+                className="image w-32 object-cover aspect-video mx-auto rounded-md"
                 src={img.src}
                 alt={`Backdrop ${i + 1}`}
               />
@@ -267,9 +270,9 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
       </div>
 
       <div
-        className={`h-full flex flex-col w-screen element-to-hide ${isAnimationComplete ? 'visible' : 'hidden'}`}
+        className={`flex flex-col element-to-hide max-w-screen px-8 overflow-x-hidden ${isAnimationComplete ? 'visible' : 'hidden'}`}
       >
-        <div className="px-4 h-full col-start-1 col-end-13 pt-[20vh]">
+        <div className="col-start-1 col-end-13 pt-[20vh] mb-[20vh]">
           <ProjectGrid projects={gridProjects} />
         </div>
       </div>

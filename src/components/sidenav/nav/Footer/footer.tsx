@@ -1,10 +1,10 @@
-import styles from "./style.module.scss";
-import { translate } from "../../anim";
-import { motion } from "framer-motion";
+import styles from './style.module.scss'
+import { translate } from '../../anim'
+import { motion } from 'framer-motion'
 
 const Footer: React.FC = () => {
   return (
-    <div className={`px-4 pb-4 ${styles.footer}`}>
+    <div className={`px-8 pb-4 ${styles.footer}`}>
       <ul>
         <motion.li
           custom={[0.3, 0]}
@@ -13,10 +13,10 @@ const Footer: React.FC = () => {
           animate="enter"
           exit="exit"
         >
-          <span>Made by:</span> Studio Lumio
+          <span>Made by:</span> JIAHAUS
         </motion.li>
       </ul>
-      <ul>
+      {/* <ul>
         <motion.li
           custom={[0.3, 0]}
           variants={translate}
@@ -37,8 +37,8 @@ const Footer: React.FC = () => {
         >
           <span>Images:</span> Freepik, Envato
         </motion.li>
-      </ul>
-      <ul>
+      </ul> */}
+      {/* <ul>
         <motion.li
           custom={[0.3, 0]}
           variants={translate}
@@ -57,9 +57,9 @@ const Footer: React.FC = () => {
         >
           Terms & Conditions
         </motion.li>
-      </ul>
+      </ul> */}
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

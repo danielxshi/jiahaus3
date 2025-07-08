@@ -14,7 +14,7 @@ type Project = {
     mimeType: string
   }
   gallery?: {
-    media?: {
+    image?: {
       url: string
       alt: string
       mimeType: string
@@ -32,6 +32,10 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   )
 
   const data = await res.json()
+
+  // ✅ Debug log to terminal
+  console.log('Payload response data:', JSON.stringify(data, null, 2))
+
   const project: Project | undefined = data?.docs?.[0]
 
   if (!project) return notFound()
@@ -39,18 +43,11 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   const gallery = project.gallery ?? []
 
   return (
-    <main className="p-6 max-w-4xl mx-auto space-y-6">
+    <main className="p-6 max-w-4xl mx-auto space-y-6 sm:mt-48 md:mt-64">
       <h1 className="text-3xl font-bold">{project.name}</h1>
       <p className="text-gray-600">{project.tagline}</p>
 
-      <img
-        src={project.poster?.url}
-        alt={project.poster?.alt}
-        className="w-full max-h-96 object-cover rounded"
-      />
-
       <p className="text-lg">{project.overview}</p>
-      <p className="text-sm text-gray-500">Votes: {project.votes}</p>
 
       <div className="flex flex-wrap gap-2">
         {project.genres.map((g, i) => (
@@ -61,9 +58,9 @@ export default async function ProjectPage({ params }: { params: { slug: string }
       </div>
 
       {gallery.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+        <div className="grid grid-cols-1 gap-6 mt-8">
           {gallery.map((item, i) => {
-            const file = item.media
+            const file = item.image
             if (!file || !file.mimeType || !file.url) return null
 
             const isVideo = file.mimeType.startsWith('video/')
@@ -71,7 +68,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
             return (
               <div key={i} className="flex flex-col space-y-2">
                 {isVideo ? (
-                  <video controls className="w-full rounded shadow">
+                  <video controls className="w-full rounded shadow max-h-[90vh] ">
                     <source src={file.url} type={file.mimeType} />
                     Your browser does not support the video tag.
                   </video>

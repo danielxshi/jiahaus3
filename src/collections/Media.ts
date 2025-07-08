@@ -6,8 +6,15 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
   upload: {
-    mimeTypes: ['image/jpeg', 'image/png', 'image/gif'],
-    adminThumbnail: 'filename', // fallback to raw file preview
+    mimeTypes: [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'video/mp4',
+      'video/webm',
+      'video/quicktime', // for .mov files
+    ],
+    adminThumbnail: 'filename', // fallback preview for video
   },
   fields: [
     {

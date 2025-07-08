@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { blur } from "../../components/sidenav/anim"; // Import the blur effect
-import styles from "../sidenav/style.module.scss";
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { blur } from '../../components/sidenav/anim' // Import the blur effect
+import styles from '../sidenav/style.module.scss'
 
 interface NavigationLinksProps {
-  isActive: boolean;
-  scrolledPast: boolean;
-  toggleMenu: () => void;
+  isActive: boolean
+  scrolledPast: boolean
+  toggleMenu: () => void
 }
 
 interface LinkType {
-  title: string;
-  href: string;
+  title: string
+  href: string
 }
 
 interface SelectedLink {
-  isActive: boolean;
-  index: number | null; // Allow null for no selection
+  isActive: boolean
+  index: number | null // Allow null for no selection
 }
 
 const NavigationLinks: React.FC<NavigationLinksProps> = ({
@@ -25,59 +25,49 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({
   toggleMenu,
 }) => {
   const links: LinkType[] = [
-    { title: "Work", href: "/" },
-    { title: "About", href: "/" },
-    { title: "Contact", href: "/" },
-  ];
+    { title: 'Work', href: '/' },
+    { title: 'About', href: '/about' },
+    // { title: 'Contact', href: '/contact' },
+  ]
 
   const [selectedLink, setSelectedLink] = useState<SelectedLink>({
     isActive: false,
     index: null, // Default to null for no active index
-  });
+  })
 
   return (
     <div className="hidden md:flex transition-colors duration-300 ease-in-out space-x-12">
       <div
         className={`${
-          isActive ? "opacity-0" : "opacity-100"
+          isActive ? 'opacity-0' : 'opacity-100'
         } flex flex-row space-x-2 group *:left-0 *:text-left text-base *:leading-relaxed `}
       >
         {links.map((link, index) => (
           <div key={`link-${index}`}>
-            {" "}
+            {' '}
             {/* ← moved key here */}
             <motion.a
               href={link.href}
               onMouseEnter={() =>
-                setSelectedLink((prev) =>
-                  prev.index !== index ? { isActive: true, index } : prev
-                )
+                setSelectedLink((prev) => (prev.index !== index ? { isActive: true, index } : prev))
               }
               onMouseLeave={() =>
                 setSelectedLink((prev) =>
-                  prev.index === index ? { isActive: false, index: null } : prev
+                  prev.index === index ? { isActive: false, index: null } : prev,
                 )
               }
               variants={blur}
               initial={false}
-              animate={
-                selectedLink.isActive && selectedLink.index !== index
-                  ? "open"
-                  : "closed"
-              }
+              animate={selectedLink.isActive && selectedLink.index !== index ? 'open' : 'closed'}
             >
               {link.title}
             </motion.a>
             {index < links.length - 1 && (
               <motion.span
                 initial={false}
-                onMouseEnter={() =>
-                  setSelectedLink((prev) => ({ isActive: true, index }))
-                }
-                onMouseLeave={() =>
-                  setSelectedLink({ isActive: false, index: null })
-                }
-                animate={selectedLink.isActive ? "open" : "closed"}
+                onMouseEnter={() => setSelectedLink((prev) => ({ isActive: true, index }))}
+                onMouseLeave={() => setSelectedLink({ isActive: false, index: null })}
+                animate={selectedLink.isActive ? 'open' : 'closed'}
                 className="group"
                 variants={blur}
               >
@@ -115,7 +105,7 @@ const NavigationLinks: React.FC<NavigationLinksProps> = ({
         </button>
       </div> */}
     </div>
-  );
-};
+  )
+}
 
-export default NavigationLinks;
+export default NavigationLinks

@@ -24,5 +24,18 @@ export default async function HomePage() {
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   // ✅ Pass movies to client component
-  return <LandingClient movies={movies} />
+  return (
+    <LandingClient
+      movies={movies.map((movie) => ({
+        id: String(movie.id), // convert number → string
+        slug: movie.slug || '',
+        name: movie.name,
+        overview: movie.overview,
+        poster:
+          typeof movie.poster === 'object' && movie.poster?.url
+            ? { url: movie.poster.url }
+            : undefined,
+      }))}
+    />
+  )
 }

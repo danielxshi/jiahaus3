@@ -25,19 +25,19 @@ const ProjectGrid: React.FC<{ projects: Project[] }> = ({ projects }) => (
         className={`${styles.gridItem} gap-y-8`}
         style={{ gridColumn: `span ${columnSpans[index % columnSpans.length]}` }}
       >
-        <Link href={`/projects/${project.slug}`} className="block hover:opacity-80 transition-all">
+        <Link href={`/projects/${project.slug}`} className="block hover:opacity-80 transition-all ">
           <div className="flex flex-col">
             {project.image?.url && (
               <img
                 src={project.image.url}
                 alt={project.subtitle || project.title}
-                className={styles.image}
+                className={`${styles.image} max-h-[90vh] bg-center object-cover`}
               />
             )}
-            <div className={`${styles.text} mt-4 flex justify-between`}>
+            <div className={`${styles.text} mt-4 flex justify-between mx-0 px-0`}>
               <h3>{project.title}</h3>
               <div className="flex flex-col">
-                <h4>{project.subtitle}</h4>
+                <h4 className="text-right">{project.subtitle}</h4>
                 <p>{project.description}</p>
               </div>
             </div>

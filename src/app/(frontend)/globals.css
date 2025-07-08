@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html,
 body {
+  /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+  font-family: 'Satoshi', sans-serif;
+  letter-spacing: 0.03em; /* or try 0.05em */
   height: 100%;
   margin: 0; /* Removes default margin */
   padding: 0; /* Removes default padding */
@@ -57,7 +59,9 @@ body {
 }
 
 #masked-text .masked-line {
-  transition: clip-path 0.3s ease-out, opacity 0.3s ease-out;
+  transition:
+    clip-path 0.3s ease-out,
+    opacity 0.3s ease-out;
 }
 
 .visible .masked-line {
@@ -107,7 +111,10 @@ a {
   opacity: 0; /* Initially hidden */
   transform: translateY(30px); /* Move down */
   clip-path: inset(100% 0 0 0); /* Start with clipping the text */
-  transition: transform 1s ease, opacity 1s ease, clip-path 1s ease;
+  transition:
+    transform 1s ease,
+    opacity 1s ease,
+    clip-path 1s ease;
 }
 
 /* Revealing the lines one by one */
