@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
           animate="enter"
           exit="exit"
         >
-          <span>Made by:</span> JIAHAUS
+          <span>Made by</span> JIAHAUS
         </motion.li>
       </ul>
       {/* <ul>
