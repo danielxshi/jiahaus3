@@ -1,6 +1,6 @@
 // lib/getMovies.ts
 export async function getMovies() {
-  const res = await fetch(`${process.env.PAYLOAD_API_URL}/api/movies?limit=10`, {
+  const res = await fetch(`${process.env.PAYLOAD_API_URL}/api/movies?limit=12`, {
     headers: {
       Authorization: `Bearer ${process.env.PAYLOAD_API_KEY}`,
     },

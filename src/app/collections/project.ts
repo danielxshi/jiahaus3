@@ -49,7 +49,7 @@ export const ProjectCollections: CollectionConfig = {
     {
       name: 'poster',
       type: 'upload',
-      relationTo: 'media', // required
+      relationTo: 'media',
       required: true,
     },
     {
@@ -60,7 +60,7 @@ export const ProjectCollections: CollectionConfig = {
     {
       name: 'tagline',
       type: 'text',
-      required: false, // Some movies in tmd have no tagline
+      required: false,
     },
     {
       name: 'genres',
@@ -72,6 +72,24 @@ export const ProjectCollections: CollectionConfig = {
         },
       ],
       required: true,
+    },
+    {
+      name: 'gallery',
+      type: 'array',
+      label: 'Image Gallery',
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+        {
+          name: 'caption',
+          type: 'text',
+          required: false,
+        },
+      ],
     },
     {
       name: 'slug',

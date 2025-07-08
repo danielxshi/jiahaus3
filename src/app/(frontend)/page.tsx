@@ -15,7 +15,7 @@ export default async function HomePage() {
   // ✅ Fetch movies collection from Payload
   const moviesResponse = await payloadInstance.find({
     collection: 'movies',
-    limit: 10,
+    limit: 12,
   })
 
   const movies = moviesResponse.docs

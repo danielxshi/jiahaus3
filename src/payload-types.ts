@@ -174,6 +174,13 @@ export interface Movie {
     name?: string | null;
     id?: string | null;
   }[];
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -294,6 +301,13 @@ export interface MoviesSelect<T extends boolean = true> {
     | T
     | {
         name?: T;
+        id?: T;
+      };
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
         id?: T;
       };
   slug?: T;

@@ -5,6 +5,10 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
+  upload: {
+    mimeTypes: ['image/jpeg', 'image/png', 'image/gif'],
+    adminThumbnail: 'filename', // fallback to raw file preview
+  },
   fields: [
     {
       name: 'alt',
@@ -12,5 +16,4 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
 }
