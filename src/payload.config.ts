@@ -1,49 +1,55 @@
 // storage-adapter-import-placeholder
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+import { buildConfig } from 'payload'
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import sharp from 'sharp'
-import { postgresAdapter } from '@payloadcms/db-postgres'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { ProjectCollections } from './app/collections/project'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  /* ─────────────────── Admin UI ─────────────────── */
   admin: {
     user: Users.slug,
-    importMap: {
-      baseDir: path.resolve(dirname),
-    },
+    importMap: { baseDir: path.resolve(dirname) }, // keep dynamic imports working
   },
+
+  /* ─────────────────── Collections ───────────────── */
   collections: [Users, Media, ProjectCollections],
-  editor: lexicalEditor(),
+
+  /* ─────────────────── Core options ─────────────── */
   secret: process.env.PAYLOAD_SECRET || '',
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-  },
-  // the type of DB you would like to use
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URL,
-    },
+  editor: lexicalEditor(),
+  typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
+
+  /* ─────────────────── Database ──────────────────── */
+  db: vercelPostgresAdapter({
+    pool: { connectionString: process.env.POSTGRES_URL || '' },
   }),
-  plugins: process.env.BLOB_READ_WRITE_TOKEN
-    ? [
-        vercelBlobStorage({
-          collections: {
-            [Media.slug]: true,
-          },
-          token: process.env.BLOB_READ_WRITE_TOKEN || '',
-        }),
-      ]
-    : [],
-  // richText editor
+
+  /* ─────────────────── Plugins ───────────────────── */
+  plugins: [
+    payloadCloudPlugin(), // keep cloud features
+    ...(process.env.BLOB_READ_WRITE_TOKEN
+      ? [
+          vercelBlobStorage({
+            collections: { [Media.slug]: true }, // enable for Media only
+            token: process.env.BLOB_READ_WRITE_TOKEN,
+            clientUploads: true, // ← REQUIRED to inject UploadHandlersProvider
+          }),
+        ]
+      : []),
+  ],
+
+  /* ─────────────────── Optional ───────────────────── */
+  sharp, // enable image transforms
 })
