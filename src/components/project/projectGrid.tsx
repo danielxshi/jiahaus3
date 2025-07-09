@@ -18,14 +18,17 @@ interface Project {
 const columnSpans = [5, 3, 3, 5, 3, 3, 2]
 
 const ProjectGrid: React.FC<{ projects: Project[] }> = ({ projects }) => (
-  <div className={`${styles.grid} gap-y-8`}>
+  <div className={`${styles.grid} gap-y-8 md:grid `}>
     {projects.map((project, index) => (
       <div
         key={project.id}
         className={`${styles.gridItem} gap-y-8`}
         style={{ gridColumn: `span ${columnSpans[index % columnSpans.length]}` }}
       >
-        <Link href={`/projects/${project.slug}`} className="block hover:opacity-80 transition-all ">
+        <Link
+          href={`/projects/${project.slug}`}
+          className="mb-24 sm:md-0 block hover:opacity-80 transition-all "
+        >
           <div className="flex flex-col">
             {project.image?.url && (
               <img

@@ -17,7 +17,7 @@ export default function First({ children }: FirstProps) {
   const logo = isHome ? logoWhite : logoBlack
 
   return (
-    <div className={`flex items-start gap-8 px-6 ${isHome ? '' : ' text-white'}`}>
+    <div className={`flex items-start gap-8 ${isHome ? '' : ' text-white'}`}>
       <Link
         href="/"
         className="block w-[90px] h-[90px] max-w-[90px] max-h-[90px] min-w-[90px] min-h-[90px] relative mt-1"

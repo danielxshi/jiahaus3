@@ -5,6 +5,7 @@ import { motion, Variants } from 'framer-motion'
 import Loading from '../../components/loading'
 import ProjectGrid from '../../components/project/projectGrid'
 import styles from '../style.module.scss'
+import Footer from '../../components/footer/footer'
 
 const scaleAnimation: Variants = {
   initial: { scale: 0, x: '-50%', y: '-50%' },
@@ -152,18 +153,18 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
       .fromTo(
         backdrop,
         { clipPath: 'inset(0% 0% 0% 0%)' },
-        { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.2, ease: 'circ.out' },
+        { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.6, ease: 'circ.out' },
         0,
       )
       .fromTo(
         bgControl.current,
         { clipPath: 'inset(100% 100% 0% 0%)' },
-        { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'circ.out' },
+        { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'circ.out' },
       )
       .fromTo(
         testRef.current,
         { y: '100%', clipPath: 'inset(0% 0% 100% 0%)' },
-        { y: '0%', clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'expo.out' },
+        { y: '0%', clipPath: 'inset(0% 0% 0% 0%)', duration: 0.6, ease: 'expo.out' },
       )
       .fromTo(bgImageRef.current, { scale: 1.2 }, { scale: 1, duration: 1.2, ease: 'expo.out' }, 0)
       .to('.element-to-hide', {
@@ -275,6 +276,7 @@ export default function App({ modal = { active: false, index: 0 }, projects = []
         <div className="col-start-1 col-end-13 pt-[20vh] mb-[20vh]">
           <ProjectGrid projects={gridProjects} />
         </div>
+        <Footer />
       </div>
     </>
   )

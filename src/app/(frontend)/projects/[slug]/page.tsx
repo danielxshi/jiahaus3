@@ -58,7 +58,7 @@ export default async function ProjectPage({ params }: any) {
       </div>
 
       {gallery.length > 0 && (
-        <div className="grid grid-cols-1 gap-6 mt-8">
+        <div className="grid grid-cols-1 gap-4 mt-8">
           {gallery.map((item, i) => {
             const file = item.image
             if (!file || !file.mimeType || !file.url) return null

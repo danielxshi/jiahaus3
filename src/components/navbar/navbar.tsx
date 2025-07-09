@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
         <div className={`styles.bar `}>
           <div className={`grid grid-cols-12 gap-x-8 `}>
             <div
-              className={`col-start-1 col-end-6 flex items-center space-x-12 *:mt-0 *:mb-auto ${
+              className={`col-start-1 md:col-end-6 sm:col-end-11 flex items-center space-x-12 *:mt-0 *:mb-auto ${
                 isActive ? 'hidden' : ''
               }`}
             >
@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
                 <Content>
                   {isHome ? (
                     <p
-                      className={`${isHome ? 'text-white' : 'text-black'} text-2xl max-w-[650px] leading-relaxed`}
+                      className={`${isHome ? 'text-white' : 'text-black'} sm:block hidden  text-2xl max-w-[650px] leading-relaxed`}
                     >
                       JIAHAUS is a media company that offers brands, businesses, and people to bring
                       projects to life through art, design, and technology.
@@ -72,7 +72,11 @@ const Navbar: React.FC = () => {
             </div>
 
             <div
-              className={`col-start-12 col-end-13 *:right-0 flex flex-row-reverse fixed right-8 ${scrolledPast ? 'bg-black' : ''}`}
+              className={`col-start-12 col-end-13 *:right-0 flex flex-row-reverse fixed right-8
+    transition-colors duration-300
+    ${scrolledPast && !isActive ? 'bg-[#0c0c0cd3] rounded-sm' : ''}
+    ${scrolledPast && isActive ? 'bg-transparent' : ''}
+  `}
             >
               <div className={`h-full top-4 right-4 z-[100]`}>
                 <button
@@ -128,26 +132,6 @@ const Navbar: React.FC = () => {
             </motion.div>
           ) : null}
         </>
-      </div>
-      {/* Fixed Hamburger Menu */}
-      <div className={`z-[100] ${scrolledPast ? '' : 'hidden'}`}>
-        <button
-          className="flex flex-col space-y-1.5 cursor-pointer bg-black  pt-3 px-2 pb-2 rounded"
-          onClick={toggleMenu}
-          // animate={!isActive ? "open" : "closed"}
-        >
-          <span
-            className={`block w-6 h-0.5 transition-transform bg-white ${
-              isActive ? 'rotate-45 translate-y-1.5 ' : ' '
-            }`}
-          ></span>
-          <span className={`block w-6 h-0.5 bg-white ${isActive ? 'opacity-0 ' : ''}`}></span>
-          <span
-            className={`block w-6 h-0.5  transition-transform bg-white ${
-              isActive ? '-rotate-45 -translate-y-2.5 ' : ''
-            }`}
-          ></span>
-        </button>
       </div>
     </>
   )

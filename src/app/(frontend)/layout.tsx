@@ -1,7 +1,6 @@
 // app/layout.tsx (server component)
 import './globals.css'
 import Navbar from '@/components/navbar/navbar'
-import Footer from '@/components/footer/footer'
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
   title: 'Payload Blank Template',
