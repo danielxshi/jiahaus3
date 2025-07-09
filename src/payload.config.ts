@@ -6,6 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -28,12 +29,12 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: vercelPostgresAdapter({
+  // the type of DB you would like to use
+  db: postgresAdapter({
     pool: {
-      connectionString: process.env.POSTGRES_URL || '',
+      connectionString: process.env.POSTGRES_URL,
     },
   }),
-  sharp,
   plugins: process.env.BLOB_READ_WRITE_TOKEN
     ? [
         vercelBlobStorage({
