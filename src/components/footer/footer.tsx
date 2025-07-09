@@ -2,7 +2,7 @@
 import FooterMessages from '../../JSON/FooterItems'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
-import styles from './footer.module.scss'
+import styles from './Footer.module.scss'
 import { motion } from 'framer-motion'
 
 interface FooterItem {
